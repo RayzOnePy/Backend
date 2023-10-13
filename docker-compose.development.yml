@@ -1,11 +1,11 @@
 version: '3'
 services:
   nginx:
+    image: nginx:stable-alpine
     volumes:
       - ./nginx/nginx.conf.dev:/etc/nginx/conf.d/nginx.conf
 
   api:
+    build: /Tasks/hello_world
     volumes:
       - ./api/src:/usr/src/app/src
-
-  # db:
