@@ -6,48 +6,42 @@ services:
       - 80:80
     volumes:
       - ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+    networks:
+      - backend-network
 
   api:
     build: /Tasks/hello_world
     ports:
       - "8080:80"
+    networks:
+      - backend-network
 
-
-  redis-server:
-    image: redis:alpine
-
-  db:
+  postgres:
     image: postgres:alpine
     restart: "always"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: inventory
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
 
-  # vote:
-  #   image: voting-app
-  #   ports:
-  #     - 5000:80
-  #   depends_on:
-  #     - redis
-  #   networks:
-  #     - backend
-  #     - frontend
-
-  # result:
-  #   image: result-app
-  #   ports:
-  #     - 5001:80
-  #   links:
-  #     - db
-  #   networks:
-  #     - backend
-  #     - frontend
-
-  # worker:
-  #   image: worker
-  #   links:
-  #     - redis
-  #     - db
-  #   networks:
-  #     - backend
+  adminer_container:
+    image: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    ports:
+      - 8081:8080
+    networks:
+      - backend-network
 
 networks:
-  backend:
-  frontend:
+  backend-network:
+    driver: bridge 
+
+volumes:
+  postgres_data:
