@@ -1,9 +1,0 @@
-server {
-    listen 80;
-
-    server_name task;
-
-    location /api {
-        proxy_pass http://api:8080;
-    }
-}
