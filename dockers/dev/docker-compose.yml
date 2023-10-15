@@ -5,8 +5,8 @@ services:
     ports:
       - ${WEB_PORTS:-8876:80}
     volumes:
-      - ./public:/var/www/public
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./data/:/var/www/html/
+      - ./logs/nginx:/var/log/nginx/
     networks:
       - backend-network
     depends_on:
@@ -16,7 +16,8 @@ services:
   api:
     build: ./images/php
     volumes:
-      - /www:/var/www
+      - ./data/:/var/www/html/
+      - ./logs/php.log:/var/log/fpm-php.www.log
     networks:
       - backend-network
     depends_on:

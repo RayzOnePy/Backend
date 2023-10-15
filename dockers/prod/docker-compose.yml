@@ -5,8 +5,8 @@ services:
     ports:
       - ${WEB_PORTS:-8876:80}
     volumes:
-      - ./public:/var/www/public
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./data/:/var/www/html/
+      - ./logs/nginx:/var/log/nginx/
     networks:
       - backend-network
     depends_on:
@@ -18,7 +18,8 @@ services:
     ports:
       - ${API_PORTS:-8080:80}
     volumes:
-      - /www:/var/www
+      - ./data/:/var/www/html/
+      - ./logs/php.log:/var/log/fpm-php.www.log
     networks:
       - backend-network
     depends_on:
@@ -37,17 +38,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - backend-network
-
-  adminer_container:
-    image: adminer
-    environment:
-      ADMINER_DEFAULT_SERVER: postgres
-    ports:
-      - ${ADMINER_PORTS:-8081:8080}
-    networks:
-      - backend-network
-    depends_on:
-      - postgres
 
 networks:
   backend-network:
