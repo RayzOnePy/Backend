@@ -1,0 +1,58 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:stable-alpine
+    environment:
+      - NGINX_PORT=80
+    ports:
+      - ${WEB_PORTS:-80:80}
+    volumes:
+      - ./nginx/nginx.conf.dev:/etc/nginx/conf.d/nginx.conf
+    networks:
+      - backend-network
+    depends_on:
+      - postgres
+      - api
+
+  api:
+    build: ./images/php
+    ports:
+      - ${API_PORTS:-8080:80}
+    volumes:
+      - /www:/var/www
+    networks:
+      - backend-network
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.0-alpine
+    restart: "always"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-root}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres} 
+    ports:
+      - ${POSTGRES_PORTS:-5432:5432}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+  adminer_container:
+    image: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    ports:
+      - ${ADMINER_PORTS:-8081:8080}
+    networks:
+      - backend-network
+    depends_on:
+      - postgres
+
+networks:
+  backend-network:
+    driver: bridge 
+
+volumes:
+  postgres_data:
