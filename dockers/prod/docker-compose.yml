@@ -3,10 +3,10 @@ services:
   nginx:
     image: nginx:stable-alpine
     ports:
-      - ${WEB_PORTS:-8876:80}
+      - ${WEB_PORTS:-80:80}
     volumes:
-      - ./data/:/var/www/html/
-      - ./logs/nginx:/var/log/nginx/
+      - ../../project/:/var/www/html
+      - ./nginx/conf.d/nginx.conf:/etc/nginx/conf.d/default.conf
     networks:
       - backend-network
     depends_on:
@@ -15,10 +15,8 @@ services:
 
   api:
     build: ./images/php
-    ports:
-      - ${API_PORTS:-8080:80}
     volumes:
-      - ./data/:/var/www/html/
+      - ../../project/:/var/www/html
       - ./logs/php.log:/var/log/fpm-php.www.log
     networks:
       - backend-network
