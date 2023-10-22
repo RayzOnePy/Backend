@@ -11,4 +11,9 @@ class MainController
     {
         echo('Привет, ' . $name);
     }
+
+    public function sayBye(string $name) : void
+    {
+        echo('Пока, ' . $name);
+    }
 }
