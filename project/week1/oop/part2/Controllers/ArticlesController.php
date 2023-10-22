@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Services\Db;
 use View\View;
+use Models\Articles\Article;
 
 class ArticlesController
 {
@@ -12,16 +13,12 @@ class ArticlesController
 
     public function View(int $articlesId)
     {
-        $article = $this->db->query("Select article_name, text, author_id  from articles where id = {$articlesId}");
+        $article = $this->db->query("Select article_name, text, author_id  from articles where id = {$articlesId}", [], Article::class);
         if ($article == null)
         {
             $this->view->renderHtml('errors/404.php', [], 404);
             return;
         }
-        $authorNickname = $this->db->query("select nickname from users where id = {$article[0]['author_id']}")[0][0];
-
-        $article[0]['nickname'] = $authorNickname;
-
         $this->view->renderHtml('articles/view.php', ['article' => $article[0]]);
     }
 

@@ -3,6 +3,7 @@
 namespace Controllers;
 use View\View;
 use Services\Db;
+use Models\Articles\Article;
 
 class MainController
 {
@@ -10,11 +11,10 @@ class MainController
     private Db $db;
     public function main() : void
     {
-        $articles = [
-            ['name' => 'Статья 1', 'text' => 'Текст статьи 1'],
-            ['name' => 'Статья 2', 'text' => 'Текст статьи 2'],
-        ];
-        $articles = $this->db->query('SELECT * FROM articles;');
+        $articles = $this->db->query('SELECT * FROM articles;', [], Article::class);
+        // echo '<pre>';
+        // var_dump($articles);
+        // echo '</pre>';
         $this->view->renderHtml('main/main.php', ['articles' => $articles]);
     }
 
