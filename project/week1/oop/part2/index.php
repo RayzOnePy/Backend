@@ -8,12 +8,20 @@ function myAutoLoader(string $className) : void
 
 spl_autoload_register('myAutoLoader');
 
-$author = new \models\users\User('Иван');
-$article = new \models\articles\Article('Заголовок', 'Текст', $author);
+// $route = $_GET['route'] ?? '';
+var_dump($_GET);
+// var_dump($route);
+
+// $pattern = '~^/hello/(.*)$~';
+// preg_match($pattern, $route, $matches);
+
+// var_dump($matches);
+
+// $author = new \models\users\User('Иван');
+// $article = new \models\articles\Article('Заголовок', 'Текст', $author);
 //var_dump($article);
 
 $controller = new \Controllers\MainController();
-//$controller->main();
 if(!empty($_GET['name'])) {
     $controller->sayHello($_GET['name']);
 } else {
