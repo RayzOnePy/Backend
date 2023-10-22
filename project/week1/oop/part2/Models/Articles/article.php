@@ -1,7 +1,7 @@
 <?php
 
-namespace models\articles;
-use models\users\User;
+namespace Models\Articles;
+use Models\Users\User;
 
 class Article
 {

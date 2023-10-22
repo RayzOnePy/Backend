@@ -1,6 +1,6 @@
 <?php
 
-namespace models\users;
+namespace Models\Users;
 class User
 {
     private string $name;
