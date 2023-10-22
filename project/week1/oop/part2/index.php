@@ -10,10 +10,6 @@ spl_autoload_register('myAutoLoader');
 
 $route = $_GET['route'] ?? '';
 $routes = require('routes.php');
-// var_dump($route);
-// echo("<br>");
-// var_dump($routes);
-
 
 $isRouteFound = false;
 foreach ($routes as $pattern => $controllerAndAction) {
