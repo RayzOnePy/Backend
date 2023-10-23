@@ -10,7 +10,7 @@
 <table class="layout">
     <tr>
         <td colspan="2" class="header">
-            Мой блог
+            <?= $title ?? 'Мой блог'?>
         </td>
     </tr>
     <tr>

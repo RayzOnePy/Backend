@@ -8,12 +8,12 @@ abstract class ActiveRecordEntity
 {
     protected ?int $id = null;
 
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public static function getById(int $id) 
+    public static function getById(int $id)
     {
         $db = Db::getInstance();
         $entities = $db->query(
@@ -24,7 +24,7 @@ abstract class ActiveRecordEntity
         return $entities ? $entities[0] : null;
     }
 
-    public static function findAll() : array
+    public static function findAll(): array
     {
         $db = Db::getInstance();
         return $db->query('select * from ' . static::getTableName() . ';', [], static::class);
@@ -46,9 +46,9 @@ abstract class ActiveRecordEntity
         $params2values = [];
         $index = 1;
         foreach ($mappedProperties as $column => $value) {
-            $param = ':param' . $index; 
+            $param = ':param' . $index;
             $columns2params[] = $column . ' = ' . $param;
-            $params2values[$param] = $value; 
+            $params2values[$param] = $value;
             $index++;
         }
         $sql = 'UPDATE ' . static::getTableName() . ' SET ' . implode(', ', $columns2params) . ' WHERE id = ' . $this->id;
@@ -117,7 +117,7 @@ abstract class ActiveRecordEntity
         return $mappedProperties;
     }
 
-    public function __set($name, $value) : void
+    public function __set($name, $value): void
     {
         $camelCaseName = $this->underscoreToCamelCase($name);
         $this->$camelCaseName = $value;
@@ -133,5 +133,5 @@ abstract class ActiveRecordEntity
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $source));
     }
 
-    abstract protected static function getTableName() : string;
+    abstract protected static function getTableName(): string;
 }
