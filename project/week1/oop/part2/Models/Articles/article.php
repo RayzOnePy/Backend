@@ -30,9 +30,19 @@ class Article extends ActiveRecordEntity
         return $this->text;
     }
 
+    public function setText(string $text) : void
+    {
+        $this->text = $text;
+    }
+
     public function getName(): string
     {
         return $this->articleName;
+    }
+
+    public function setName(string $name) : void
+    {
+        $this->articleName = $name;
     }
 
     protected static function getTableName() : string
