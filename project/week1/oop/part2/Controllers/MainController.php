@@ -11,10 +11,7 @@ class MainController
     private Db $db;
     public function main() : void
     {
-        $articles = $this->db->query('SELECT * FROM articles;', [], Article::class);
-        // echo '<pre>';
-        // var_dump($articles);
-        // echo '</pre>';
+        $articles = Article::findAll();
         $this->view->renderHtml('main/main.php', ['articles' => $articles]);
     }
 

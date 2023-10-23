@@ -5,21 +5,23 @@ namespace Controllers;
 use Services\Db;
 use View\View;
 use Models\Articles\Article;
+use Models\Users\User;
 
 class ArticlesController
 {
     private View $view;
     private Db $db;
 
-    public function View(int $articlesId)
+    public function View(int $articleId) : void
     {
-        $article = $this->db->query("Select article_name, text, author_id  from articles where id = {$articlesId}", [], Article::class);
+        $article = Article::getById($articleId);
         if ($article == null)
         {
             $this->view->renderHtml('errors/404.php', [], 404);
             return;
         }
-        $this->view->renderHtml('articles/view.php', ['article' => $article[0]]);
+
+        $this->view->renderHtml('articles/view.php', ['article' => $article]);
     }
 
     public function __construct()
