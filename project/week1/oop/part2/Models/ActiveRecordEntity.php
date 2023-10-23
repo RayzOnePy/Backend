@@ -6,7 +6,7 @@ use Services\Db;
 
 abstract class ActiveRecordEntity
 {
-    protected int $id;
+    protected ?int $id = null;
 
     public function getId() : int
     {
@@ -46,9 +46,9 @@ abstract class ActiveRecordEntity
         $params2values = [];
         $index = 1;
         foreach ($mappedProperties as $column => $value) {
-            $param = ':param' . $index; // :param1
-            $columns2params[] = $column . ' = ' . $param; // column1 = :param1
-            $params2values[$param] = $value; // [:param1 => value1]
+            $param = ':param' . $index; 
+            $columns2params[] = $column . ' = ' . $param;
+            $params2values[$param] = $value; 
             $index++;
         }
         $sql = 'UPDATE ' . static::getTableName() . ' SET ' . implode(', ', $columns2params) . ' WHERE id = ' . $this->id;
@@ -74,6 +74,22 @@ abstract class ActiveRecordEntity
         $sql = 'INSERT INTO ' . static::getTableName() . '(' . implode(', ', $columns) . ')' . ' VALUES (' . implode(', ', $params) . ' )';
         $db = Db::getInstance();
         $db->query($sql, $params2values, static::class);
+
+        $this->id = $db->getLastInsertId();
+        $this->refresh();
+    }
+
+    private function refresh(): void
+    {
+        $objectFromDb = static::getById($this->id);
+        $reflector = new \ReflectionObject($objectFromDb);
+        $properties = $reflector->getProperties();
+
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+            $propertyName = $property->getName();
+            $this->$propertyName = $property->getValue($objectFromDb);
+        }
     }
 
     private function mapPropertiesToDbFormat(): array

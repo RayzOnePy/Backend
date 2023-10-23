@@ -13,7 +13,7 @@ class Article extends ActiveRecordEntity
 
     protected int $authorId;
 
-    protected string $createdAt;
+    protected ?string $createdAt = null;
 
     public function getAuthorId() : int
     {
@@ -23,6 +23,11 @@ class Article extends ActiveRecordEntity
     public function getAuthor() : User
     {
         return User::getById($this->authorId);
+    }
+
+    public function setAuthor(User $author): void
+    {
+        $this->authorId = $author->getId();
     }
 
     public function getText(): string

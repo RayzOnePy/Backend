@@ -20,6 +20,11 @@ class Db
         return $sth->fetchAll(\PDO::FETCH_CLASS, $className);
     }
 
+    public function getLastInsertId(): int
+    {
+        return (int) $this->pdo->lastInsertId();
+    }
+
     public static function getInstance() : self
     {
         if (self::$instance === null) {
