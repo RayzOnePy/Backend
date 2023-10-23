@@ -51,6 +51,17 @@ class ArticlesController
         $article->save();
     }
 
+    public function delete (int $id) : void
+    {
+        $article = Article::getById($id);
+        if ($article) {
+            $article->delete();
+            var_dump($article);
+        } else {
+            echo('статьи с таким id нет');
+        }
+    }
+
     public function __construct()
     {
         $this->view = new View(__DIR__ . '/../templates');
