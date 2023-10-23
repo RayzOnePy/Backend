@@ -2,7 +2,6 @@
 
 namespace Models\Articles;
 
-use Services\Db;
 use Models\ActiveRecordEntity;
 use Models\Users\User;
 

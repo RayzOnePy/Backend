@@ -6,6 +6,8 @@ class Db
 {
     private \PDO $pdo;
 
+    private static $instance;
+
     public function query(string $sql, $params = [], string $className = 'stdClass') : ?array
     {
         $sth = $this->pdo->prepare($sql);
@@ -18,7 +20,15 @@ class Db
         return $sth->fetchAll(\PDO::FETCH_CLASS, $className);
     }
 
-    public function __construct()
+    public static function getInstance() : self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    private function __construct()
     {
 
         try {

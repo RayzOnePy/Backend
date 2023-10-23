@@ -2,13 +2,11 @@
 
 namespace Controllers;
 use View\View;
-use Services\Db;
 use Models\Articles\Article;
 
 class MainController
 {
     private View $view;
-    private Db $db;
     public function main() : void
     {
         $articles = Article::findAll();
@@ -28,6 +26,5 @@ class MainController
     public function __construct()
     {
         $this->view = new View(__DIR__ . '/../templates');
-        $this->db = new Db();
     }
 }
