@@ -35,16 +35,14 @@ class Db
         return self::$instance;
     }
 
+    /**
+     * @throws DbException
+     */
     private function __construct()
     {
-
         try {
             $dsn = "pgsql:host=postgres;port=5432;dbname=postgres;";
             $this->pdo = new \PDO($dsn, 'root', 'password');
-
-            if ($this->pdo) {
-                // echo "Connected to the database successfully!";
-            }
         } catch (\PDOException $e) {
             throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
         }
