@@ -10,7 +10,12 @@
 <table class="layout">
     <tr>
         <td colspan="2" class="header">
-            <?= $title ?? 'Мой блог'?>
+            Мой блог
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right">
+            <?= !empty($user) ? 'Привет, ' . $user->getNickname() : 'Войдите на сайт' ?>
         </td>
     </tr>
     <tr>

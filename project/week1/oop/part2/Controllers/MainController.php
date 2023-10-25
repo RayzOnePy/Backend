@@ -2,11 +2,14 @@
 
 namespace Controllers;
 
+use Models\Users\User;
+use Models\Users\UsersAuthService;
 use View\View;
 use Models\Articles\Article;
 
 class MainController
 {
+    private User $user;
     private View $view;
 
     public function main(): void
@@ -27,6 +30,8 @@ class MainController
 
     public function __construct()
     {
+        $this->user = UsersAuthService::getUserByToken();
         $this->view = new View(__DIR__ . '/../templates');
+        $this->view->setVar('user', $this->user);
     }
 }
