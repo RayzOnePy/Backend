@@ -8,10 +8,8 @@ use Models\Users\User;
 use Models\Users\UsersAuthService;
 use View\View;
 
-class UsersController
+class UsersController extends AbstractController
 {
-    private View $view;
-
     public function signUp(): void
     {
         if (!empty($_POST)) {
@@ -27,8 +25,7 @@ class UsersController
                 $this->view->renderHtml('users/signUpSuccessful.php');
                 return;
             }
-        }
-        else {
+        } else {
             $this->view->renderHtml('users/signUp.php');
         }
     }
@@ -49,8 +46,9 @@ class UsersController
         $this->view->renderHtml('users/login.php');
     }
 
-    public function __construct()
+    public function logout(): void
     {
-        $this->view = new View(__DIR__ . '/../templates');
+        setcookie('token', '0', 0, '/', '', false, true);
+        header('Location: /');
     }
 }

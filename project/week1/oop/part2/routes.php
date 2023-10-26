@@ -9,4 +9,5 @@ return [
     '~^articles/add$~' => [\Controllers\ArticlesController::class, 'add'],
     '~^users/register~' => [\Controllers\UsersController::class, 'signUp'],
     '~^users/login$~' => [\Controllers\UsersController::class, 'login'],
+    '~^users/logout$~' => [\Controllers\UsersController::class, 'logout'],
 ];

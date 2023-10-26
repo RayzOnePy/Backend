@@ -10,7 +10,7 @@ class UsersAuthService
         setcookie('token', $token, 0, '/', '', false, true);
     }
 
-    public static function getUserByToken(): ?User
+    public static function getUserByToken()
     {
         $token = $_COOKIE['token'] ?? '';
 

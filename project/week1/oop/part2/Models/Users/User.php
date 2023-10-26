@@ -82,6 +82,9 @@ class User extends ActiveRecordEntity
         return $user;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public static function login(array $loginData): User
     {
         if (empty($loginData['email'])) {
@@ -111,6 +114,12 @@ class User extends ActiveRecordEntity
     {
         return $this->password;
     }
+
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
 
     public function getAuthToken(): string
     {

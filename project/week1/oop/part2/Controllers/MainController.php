@@ -7,11 +7,8 @@ use Models\Users\UsersAuthService;
 use View\View;
 use Models\Articles\Article;
 
-class MainController
+class MainController extends AbstractController
 {
-    private User $user;
-    private View $view;
-
     public function main(): void
     {
         $articles = Article::findAll();
@@ -26,12 +23,5 @@ class MainController
     public function sayBye(string $name): void
     {
         echo('Пока, ' . $name);
-    }
-
-    public function __construct()
-    {
-        $this->user = UsersAuthService::getUserByToken();
-        $this->view = new View(__DIR__ . '/../templates');
-        $this->view->setVar('user', $this->user);
     }
 }
