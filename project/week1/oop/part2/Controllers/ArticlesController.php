@@ -6,10 +6,8 @@ use Exceptions\InvalidArgumentException;
 use Exceptions\ForbiddenException;
 use Exceptions\NotFoundException;
 use Exceptions\UnauthorizedException;
-use Models\Users\UsersAuthService;
-use View\View;
+use Models\Comment;
 use Models\Articles\Article;
-use Models\Users\User;
 
 class ArticlesController extends AbstractController
 {
@@ -19,11 +17,12 @@ class ArticlesController extends AbstractController
     public function view(int $articleId): void
     {
         $article = Article::getById($articleId);
+        $comments = Comment::getAllByArticleId($articleId);
         if ($article == null) {
             throw new NotFoundException();
         }
 
-        $this->view->renderHtml('articles/view.php', ['article' => $article]);
+        $this->view->renderHtml('articles/view.php', ['article' => $article, 'comments' => $comments]);
     }
 
     /**

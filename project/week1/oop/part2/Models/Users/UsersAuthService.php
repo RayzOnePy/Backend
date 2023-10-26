@@ -20,7 +20,7 @@ class UsersAuthService
 
         [$userId, $authToken] = explode(':', $token, 2);
 
-        $user = User::getById((int) $userId);
+        $user = User::getById((int)$userId);
 
         if ($user === null) {
             return null;

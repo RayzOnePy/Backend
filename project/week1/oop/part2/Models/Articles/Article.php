@@ -18,7 +18,7 @@ class Article extends ActiveRecordEntity
 
     public function getAuthorId(): int
     {
-        return (int)$this->authorId;
+        return $this->authorId;
     }
 
     public function getAuthor(): User

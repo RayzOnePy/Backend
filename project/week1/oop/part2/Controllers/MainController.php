@@ -2,9 +2,6 @@
 
 namespace Controllers;
 
-use Models\Users\User;
-use Models\Users\UsersAuthService;
-use View\View;
 use Models\Articles\Article;
 
 class MainController extends AbstractController

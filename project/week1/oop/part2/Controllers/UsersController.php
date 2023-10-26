@@ -3,10 +3,10 @@
 
 namespace Controllers;
 
+use Exception;
 use Exceptions\InvalidArgumentException;
 use Models\Users\User;
 use Models\Users\UsersAuthService;
-use View\View;
 
 class UsersController extends AbstractController
 {
@@ -18,12 +18,11 @@ class UsersController extends AbstractController
                 $user = User::signUp($_POST);
             } catch (InvalidArgumentException $e) {
                 $this->view->renderHtml('users/signUp.php', ['error' => $e->getMessage()]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
 
             if ($user instanceof User) {
                 $this->view->renderHtml('users/signUpSuccessful.php');
-                return;
             }
         } else {
             $this->view->renderHtml('users/signUp.php');
