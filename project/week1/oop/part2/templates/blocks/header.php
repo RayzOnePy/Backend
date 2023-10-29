@@ -10,7 +10,18 @@
 <table class="layout">
     <tr>
         <td colspan="2" class="header">
-            <?= $title ?? 'Мой блог'?>
+            Мой блог
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right">
+            <?php if(!empty($user)): ?>
+            <p>Привет <?=  $user->getNickname() ?></p>
+            <a href="/users/logout">Выйти</a>
+            <?php else: ?>
+            <a href="/users/login">Войти</a>
+            <a href="/users/register">Зарегистрироваться</a>
+            <?php endif; ?>
         </td>
     </tr>
     <tr>

@@ -1,11 +1,6 @@
 FROM php:8.1-fpm-alpine
         
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-# RUN libpq-dev \
-#     && docker-php-ext-install pdo pdo_mysql pdo_pgsql
-# RUN install-php-extensions \
-#     pdo \
-#     pdo_pgsql
 
 RUN apk update && apk add \
     build-base \

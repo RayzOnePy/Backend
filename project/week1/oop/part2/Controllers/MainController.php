@@ -2,13 +2,10 @@
 
 namespace Controllers;
 
-use View\View;
 use Models\Articles\Article;
 
-class MainController
+class MainController extends AbstractController
 {
-    private View $view;
-
     public function main(): void
     {
         $articles = Article::findAll();
@@ -23,10 +20,5 @@ class MainController
     public function sayBye(string $name): void
     {
         echo('Пока, ' . $name);
-    }
-
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../templates');
     }
 }

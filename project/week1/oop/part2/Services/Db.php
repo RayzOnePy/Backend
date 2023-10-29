@@ -3,10 +3,12 @@
 namespace Services;
 
 use Exceptions\DbException;
+use PDO;
+use PDOException;
 
 class Db
 {
-    private \PDO $pdo;
+    private PDO $pdo;
 
     private static $instance;
 
@@ -19,7 +21,7 @@ class Db
             return null;
         }
 
-        return $sth->fetchAll(\PDO::FETCH_CLASS, $className);
+        return $sth->fetchAll(PDO::FETCH_CLASS, $className);
     }
 
     public function getLastInsertId(): int
@@ -35,17 +37,15 @@ class Db
         return self::$instance;
     }
 
+    /**
+     * @throws DbException
+     */
     private function __construct()
     {
-
         try {
             $dsn = "pgsql:host=postgres;port=5432;dbname=postgres;";
-            $this->pdo = new \PDO($dsn, 'root', 'password');
-
-            if ($this->pdo) {
-                // echo "Connected to the database successfully!";
-            }
-        } catch (\PDOException $e) {
+            $this->pdo = new PDO($dsn, 'root', 'password');
+        } catch (PDOException $e) {
             throw new DbException('Ошибка при подключении к базе данных: ' . $e->getMessage());
         }
     }
